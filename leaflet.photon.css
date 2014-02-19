@@ -1,0 +1,24 @@
+ul.photon-autocomplete {
+    position: absolute;
+    background-color: white;
+    z-index: 1000;
+    box-shadow: 0 4px 9px #999999;
+}
+.photon-autocomplete li {
+    min-height: 40px;
+    line-height: 1em;
+    padding: 5px 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 1em;
+}
+.photon-autocomplete li strong {
+    display: block;
+}
+.photon-autocomplete li.on {
+    background-color: #d35400;
+    cursor: pointer;
+}
+.photon-input:focus {
+    width: 400px;
+}
