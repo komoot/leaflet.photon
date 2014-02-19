@@ -5,7 +5,7 @@ L.Control.Photon = L.Control.extend({
         url: 'http://88.198.70.11:5001/api/?',
         placeholder: "Start typing...",
         emptyMessage: "No result",
-        minChar: 2,
+        minChar: 3,
         limit: 5,
         includePosition: true
     },
