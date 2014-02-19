@@ -7,6 +7,7 @@ L.Control.Photon = L.Control.extend({
         emptyMessage: "No result",
         minChar: 3,
         limit: 5,
+        submitDelay: 300,
         includePosition: true
     },
 
@@ -141,7 +142,11 @@ L.Control.Photon = L.Control.extend({
         ];
         if (special.indexOf(e.keyCode) === -1)
         {
-            this.search();
+            if (typeof this.submitDelay === "number") {
+                window.clearTimeout(this.submitDelay);
+                delete this.submitDelay;
+            }
+            this.submitDelay = window.setTimeout(L.Util.bind(this.search, this), this.options.submitDelay);
         }
     },
 
