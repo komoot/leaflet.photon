@@ -19,6 +19,14 @@ ul.photon-autocomplete {
     background-color: #2980b9;
     cursor: pointer;
 }
+.photon-autocomplete .photon-feedback {
+    display: block;
+    text-align: right;
+    font-size: 0.8em;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    color: #999;
+}
 .photon-input:focus {
     width: 400px;
 }

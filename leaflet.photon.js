@@ -10,7 +10,8 @@ L.Control.Photon = L.Control.extend({
         minChar: 3,
         limit: 5,
         submitDelay: 300,
-        includePosition: true
+        includePosition: true,
+        feedbackEmail: "photon@komoot.de" // Set to null to remove feedback box
     },
 
     CACHE: '',
@@ -271,6 +272,11 @@ L.Control.Photon = L.Control.extend({
         this.forEach(geojson.features, function (feature, index) {
             self.RESULTS.push(self.createResult(feature));
         });
+        if (this.options.feedbackEmail) {
+            var feedback = L.DomUtil.create('a', 'photon-feedback', this.resultsContainer);
+            feedback.href = "mailto:" + this.options.feedbackEmail;
+            feedback.innerHTML = "Feedback";
+        }
         this.CURRENT = 0;
         this.highlight();
         if (this.options.resultsHandler) {
