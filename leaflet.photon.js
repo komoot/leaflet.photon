@@ -225,6 +225,7 @@ L.Control.Photon = L.Control.extend({
             detailsContainer = L.DomUtil.create('small', '', el),
             details = [];
         title.innerHTML = feature.properties.name;
+        details.push(this.formatType(feature));
         if (feature.properties.city && feature.properties.city !== feature.properties.name) {
             details.push(feature.properties.city);
         }
@@ -234,6 +235,14 @@ L.Control.Photon = L.Control.extend({
 
     formatResult: function (feature, el) {
         return (this.options.formatResult || this._formatResult).call(this, feature, el);
+    },
+
+    formatType: function (feature) {
+        return (this.options.formatType || this._formatType).call(this, feature);
+    },
+
+    _formatType: function (feature) {
+        return feature.properties.osm_value;
     },
 
     createResult: function (feature) {
