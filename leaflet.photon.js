@@ -11,6 +11,7 @@ L.Control.Photon = L.Control.extend({
         limit: 5,
         submitDelay: 300,
         includePosition: true,
+        noResultLabel: "No result",
         feedbackEmail: "photon@komoot.de" // Set to null to remove feedback box
     },
 
@@ -272,6 +273,10 @@ L.Control.Photon = L.Control.extend({
         this.forEach(geojson.features, function (feature, index) {
             self.RESULTS.push(self.createResult(feature));
         });
+        if (geojson.features.length === 0) {
+            var noresult = L.DomUtil.create('li', 'photon-no-result', this.resultsContainer);
+            noresult.innerHTML = this.options.noResultLabel;
+        }
         if (this.options.feedbackEmail) {
             var feedback = L.DomUtil.create('a', 'photon-feedback', this.resultsContainer);
             feedback.href = "mailto:" + this.options.feedbackEmail;
@@ -282,7 +287,6 @@ L.Control.Photon = L.Control.extend({
         if (this.options.resultsHandler) {
             this.options.resultsHandler(geojson);
         }
-        //TODO manage no results
     },
 
     highlight: function () {
