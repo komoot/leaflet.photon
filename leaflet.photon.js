@@ -333,11 +333,12 @@ L.Control.Photon = L.Control.extend({
                 limit: this.options.limit,
                 lat: this.options.includePosition ? this.map.getCenter().lat : null,
                 lon: this.options.includePosition ? this.map.getCenter().lng : null
-            };
+            }, self = this;
         xhr.open('GET', this.options.url + this.buildQueryString(params), true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
         xhr.onload = function(e) {
+            self.fire('ajax:return');
             if (this.status == 200) {
                 if (callback) {
                     var raw = this.response;
@@ -347,6 +348,7 @@ L.Control.Photon = L.Control.extend({
             }
         };
 
+        this.fire('ajax:send');
         xhr.send();
     },
 
