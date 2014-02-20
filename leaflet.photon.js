@@ -1,6 +1,8 @@
 
 L.Control.Photon = L.Control.extend({
 
+    includes: L.Mixin.Events,
+
     options: {
         url: 'http://photon.komoot.de/api/?',
         placeholder: "Start typing...",
@@ -64,6 +66,7 @@ L.Control.Photon = L.Control.extend({
         L.DomEvent.on(this.input, "keydown", this.onKeyDown, this);
         L.DomEvent.on(this.input, "keyup", this.onKeyUp, this);
         L.DomEvent.on(this.input, "blur", this.onBlur, this);
+        L.DomEvent.on(this.input, "focus", this.onFocus, this);
     },
 
     createResultsContainer: function () {
@@ -151,10 +154,15 @@ L.Control.Photon = L.Control.extend({
     },
 
     onBlur: function (e) {
+        this.fire('blur');
         var self = this;
         setTimeout(function () {
             self.hide();
         }, 100);
+    },
+
+    onFocus: function (e) {
+        this.fire('focus');
     },
 
     clear: function () {
@@ -165,6 +173,7 @@ L.Control.Photon = L.Control.extend({
     },
 
     hide: function() {
+        this.fire('hide');
         this.clear();
         this.resultsContainer.style.display = 'none';
         this.input.value = "";
@@ -264,6 +273,9 @@ L.Control.Photon = L.Control.extend({
         });
         this.CURRENT = 0;
         this.highlight();
+        if (this.options.resultsHandler) {
+            this.options.resultsHandler(geojson);
+        }
         //TODO manage no results
     },
 
