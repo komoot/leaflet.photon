@@ -211,9 +211,14 @@ L.Control.Photon = L.Control.extend({
 
     _formatResult: function (feature, el) {
         var title = L.DomUtil.create('strong', '', el),
-            details = L.DomUtil.create('small', '', el);
+            detailsContainer = L.DomUtil.create('small', '', el),
+            details = [];
         title.innerHTML = feature.properties.name;
-        details.innerHTML = feature.properties.country;
+        if (feature.properties.city && feature.properties.city !== feature.properties.name) {
+            details.push(feature.properties.city);
+        }
+        details.push(feature.properties.country);
+        detailsContainer.innerHTML = details.join(', ');
     },
 
     formatResult: function (feature, el) {
