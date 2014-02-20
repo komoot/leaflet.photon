@@ -16,7 +16,7 @@ ul.photon-autocomplete {
     display: block;
 }
 .photon-autocomplete li.on {
-    background-color: #d35400;
+    background-color: #2980b9;
     cursor: pointer;
 }
 .photon-input:focus {

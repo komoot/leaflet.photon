@@ -2,7 +2,7 @@
 L.Control.Photon = L.Control.extend({
 
     options: {
-        url: 'http://88.198.70.11:5001/api/?',
+        url: 'http://photon.komoot.de/api/?',
         placeholder: "Start typing...",
         emptyMessage: "No result",
         minChar: 3,
