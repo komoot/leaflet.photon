@@ -335,7 +335,10 @@ L.Control.Photon = L.Control.extend({
     },
 
     ajax: function (val, callback, thisobj) {
-        var xhr = new XMLHttpRequest(),
+        if (typeof this.xhr === "object") {
+            this.xhr.abort();
+        }
+        this.xhr = new XMLHttpRequest(),
             params = {
                 q: val,
                 lang: this.options.lang,
@@ -343,22 +346,23 @@ L.Control.Photon = L.Control.extend({
                 lat: this.options.includePosition ? this.map.getCenter().lat : null,
                 lon: this.options.includePosition ? this.map.getCenter().lng : null
             }, self = this;
-        xhr.open('GET', this.options.url + this.buildQueryString(params), true);
-        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        this.xhr.open('GET', this.options.url + this.buildQueryString(params), true);
+        this.xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
-        xhr.onload = function(e) {
+        this.xhr.onload = function(e) {
             self.fire('ajax:return');
             if (this.status == 200) {
                 if (callback) {
                     var raw = this.response;
                     raw = JSON.parse(raw);
-                    callback.call(thisobj || xhr, raw);
+                    callback.call(thisobj || this, raw);
                 }
             }
+            delete this.xhr;
         };
 
         this.fire('ajax:send');
-        xhr.send();
+        this.xhr.send();
     },
 
     buildQueryString: function (params) {
