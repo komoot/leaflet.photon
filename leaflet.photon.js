@@ -101,6 +101,7 @@ L.Control.Photon = L.Control.extend({
             case this.KEYS.ESC:
                 L.DomEvent.stop(e);
                 this.hide();
+                this.input.blur();
                 break;
             case this.KEYS.DOWN:
                 if(this.RESULTS.length > 0) {
@@ -165,6 +166,7 @@ L.Control.Photon = L.Control.extend({
 
     onFocus: function (e) {
         this.fire('focus');
+        this.input.select();
     },
 
     clear: function () {
@@ -178,13 +180,13 @@ L.Control.Photon = L.Control.extend({
         this.fire('hide');
         this.clear();
         this.resultsContainer.style.display = 'none';
-        this.input.value = "";
     },
 
     setChoice: function (choice) {
         choice = choice || this.RESULTS[this.CURRENT];
         if (choice) {
             this.hide();
+            this.input.value = "";
             this.onSelected(choice.feature);
         }
     },
