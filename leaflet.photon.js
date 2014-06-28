@@ -64,11 +64,12 @@ L.Control.Photon = L.Control.extend({
         this.input.type = 'text';
         this.input.placeholder = this.options.placeholder;
         this.input.autocomplete = 'off';
+        L.DomEvent.disableClickPropagation(this.input);
 
-        L.DomEvent.on(this.input, "keydown", this.onKeyDown, this);
-        L.DomEvent.on(this.input, "keyup", this.onKeyUp, this);
-        L.DomEvent.on(this.input, "blur", this.onBlur, this);
-        L.DomEvent.on(this.input, "focus", this.onFocus, this);
+        L.DomEvent.on(this.input, 'keydown', this.onKeyDown, this);
+        L.DomEvent.on(this.input, 'keyup', this.onKeyUp, this);
+        L.DomEvent.on(this.input, 'blur', this.onBlur, this);
+        L.DomEvent.on(this.input, 'focus', this.onFocus, this);
     },
 
     createResultsContainer: function () {
