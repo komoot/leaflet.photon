@@ -2,7 +2,7 @@ leaflet.photon
 ==============
 
 
-Smaple Usage
+Sample Usage
 
 ```javascript
 function myHandler(geojson) {
