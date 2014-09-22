@@ -188,6 +188,7 @@ L.Control.Photon = L.Control.extend({
         if (choice) {
             this.hide();
             this.input.value = "";
+            this.fire('selected', {choice: choice.feature});
             this.onSelected(choice.feature);
         }
     },
