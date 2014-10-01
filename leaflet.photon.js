@@ -227,13 +227,14 @@ L.Control.Photon = L.Control.extend({
     _formatResult: function (feature, el) {
         var title = L.DomUtil.create('strong', '', el),
             detailsContainer = L.DomUtil.create('small', '', el),
-            details = [];
+            details = [],
+            type = this.formatType(feature);
         title.innerHTML = feature.properties.name;
-        details.push(this.formatType(feature));
+        if (type) details.push(type);
         if (feature.properties.city && feature.properties.city !== feature.properties.name) {
             details.push(feature.properties.city);
         }
-        details.push(feature.properties.country);
+        if (feature.properties.country) details.push(feature.properties.country);
         detailsContainer.innerHTML = details.join(', ');
     },
 
