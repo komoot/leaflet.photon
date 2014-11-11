@@ -5,14 +5,14 @@ L.Control.Photon = L.Control.extend({
 
     options: {
         url: 'http://photon.komoot.de/api/?',
-        placeholder: "Start typing...",
-        emptyMessage: "No result",
+        placeholder: 'Start typing...',
+        emptyMessage: 'No result',
         minChar: 3,
         limit: 5,
         submitDelay: 300,
         includePosition: true,
-        noResultLabel: "No result",
-        feedbackEmail: "photon@komoot.de" // Set to null to remove feedback box
+        noResultLabel: 'No result',
+        feedbackEmail: 'photon@komoot.de'  // Set to null to remove feedback box
     },
 
     CACHE: '',
@@ -39,12 +39,12 @@ L.Control.Photon = L.Control.extend({
         var CURRENT = null;
 
         try {
-            Object.defineProperty(this, "CURRENT", {
+            Object.defineProperty(this, 'CURRENT', {
                 get: function () {
                     return CURRENT;
                 },
                 set: function (index) {
-                    if (typeof index === "object") {
+                    if (typeof index === 'object') {
                         index = this.resultToIndex(index);
                     }
                     CURRENT = index;
@@ -83,7 +83,7 @@ L.Control.Photon = L.Control.extend({
         this.resultsContainer.style.left = l + 'px';
         this.resultsContainer.style.top = t + 'px';
         var width = this.options.width ? this.options.width : this.input.offsetWidth - 2;
-        this.resultsContainer.style.width = width + "px";
+        this.resultsContainer.style.width = width + 'px';
     },
 
     onKeyDown: function (e) {
@@ -149,7 +149,7 @@ L.Control.Photon = L.Control.extend({
         ];
         if (special.indexOf(e.keyCode) === -1)
         {
-            if (typeof this.submitDelay === "number") {
+            if (typeof this.submitDelay === 'number') {
                 window.clearTimeout(this.submitDelay);
                 delete this.submitDelay;
             }
@@ -187,7 +187,7 @@ L.Control.Photon = L.Control.extend({
         choice = choice || this.RESULTS[this.CURRENT];
         if (choice) {
             this.hide();
-            this.input.value = "";
+            this.input.value = '';
             this.fire('selected', {choice: choice.feature});
             this.onSelected(choice.feature);
         }
@@ -282,7 +282,7 @@ L.Control.Photon = L.Control.extend({
     handleResults: function(geojson) {
         var self = this;
         this.clear();
-        this.resultsContainer.style.display = "block";
+        this.resultsContainer.style.display = 'block';
         this.resizeContainer();
         this.forEach(geojson.features, function (feature, index) {
             self.RESULTS.push(self.createResult(feature));
@@ -293,8 +293,8 @@ L.Control.Photon = L.Control.extend({
         }
         if (this.options.feedbackEmail) {
             var feedback = L.DomUtil.create('a', 'photon-feedback', this.resultsContainer);
-            feedback.href = "mailto:" + this.options.feedbackEmail;
-            feedback.innerHTML = "Feedback";
+            feedback.href = 'mailto:' + this.options.feedbackEmail;
+            feedback.innerHTML = 'Feedback';
         }
         this.CURRENT = 0;
         this.highlight();
@@ -340,17 +340,18 @@ L.Control.Photon = L.Control.extend({
     },
 
     ajax: function (val, callback, thisobj) {
-        if (typeof this.xhr === "object") {
+        if (typeof this.xhr === 'object') {
             this.xhr.abort();
         }
-        this.xhr = new XMLHttpRequest(),
+        this.xhr = new XMLHttpRequest();
+        var self = this,
             params = {
                 q: val,
                 lang: this.options.lang,
                 limit: this.options.limit,
                 lat: this.options.includePosition ? this.map.getCenter().lat : null,
                 lon: this.options.includePosition ? this.map.getCenter().lng : null
-            }, self = this;
+            };
         this.xhr.open('GET', this.options.url + this.buildQueryString(params), true);
 
         this.xhr.onload = function(e) {
@@ -373,7 +374,7 @@ L.Control.Photon = L.Control.extend({
         var query_string = [];
         for (var key in params) {
             if (params[key]) {
-                query_string.push(encodeURIComponent(key) + "=" + encodeURIComponent(params[key]));
+                query_string.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
             }
         }
         return query_string.join('&');
