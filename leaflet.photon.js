@@ -352,7 +352,6 @@ L.Control.Photon = L.Control.extend({
                 lon: this.options.includePosition ? this.map.getCenter().lng : null
             }, self = this;
         this.xhr.open('GET', this.options.url + this.buildQueryString(params), true);
-        this.xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
         this.xhr.onload = function(e) {
             self.fire('ajax:return');
