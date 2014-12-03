@@ -1,12 +1,60 @@
+L.PhotonBase = L.Class.extend({
 
-L.Control.Photon = L.Control.extend({
+    forEach: function (els, callback) {
+        Array.prototype.forEach.call(els, callback);
+    },
+
+    ajax: function (callback, thisobj) {
+        if (typeof this.xhr === 'object') {
+            this.xhr.abort();
+        }
+        this.xhr = new XMLHttpRequest();
+        var self = this;
+        this.xhr.open('GET', this.options.url + this.buildQueryString(this.getParams()), true);
+
+        this.xhr.onload = function(e) {
+            self.fire('ajax:return');
+            if (this.status == 200) {
+                if (callback) {
+                    var raw = this.response;
+                    raw = JSON.parse(raw);
+                    callback.call(thisobj || this, raw);
+                }
+            }
+            delete this.xhr;
+        };
+
+        this.fire('ajax:send');
+        this.xhr.send();
+    },
+
+    buildQueryString: function (params) {
+        var query_string = [];
+        for (var key in params) {
+            if (params[key]) {
+                query_string.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
+            }
+        }
+        return query_string.join('&');
+    },
+
+    featureToPopupContent: function (feature) {
+        var container = L.DomUtil.create('div', 'leaflet-photon-popup'),
+            title = L.DomUtil.create('h3', '', container);
+        title.innerHTML = feature.properties.label;
+        return container;
+    }
+
+});
+
+
+L.PhotonSearch = L.PhotonBase.extend({
 
     includes: L.Mixin.Events,
 
     options: {
         url: 'http://photon.komoot.de/api/?',
         placeholder: 'Start typing...',
-        emptyMessage: 'No result',
         minChar: 3,
         limit: 5,
         submitDelay: 300,
@@ -31,11 +79,10 @@ L.Control.Photon = L.Control.extend({
         CTRL: 18
     },
 
-    onAdd: function (map, options) {
+    initialize: function (map, input, options) {
         this.map = map;
-        this.container = L.DomUtil.create('div', 'leaflet-photon');
-
-        this.options = L.Util.extend(this.options, options);
+        this.input = input;
+        L.setOptions(this, options);
         var CURRENT = null;
 
         try {
@@ -53,14 +100,6 @@ L.Control.Photon = L.Control.extend({
         } catch (e) {
             // Hello IE8
         }
-
-        this.createInput();
-        this.createResultsContainer();
-        return this.container;
-    },
-
-    createInput: function () {
-        this.input = L.DomUtil.create('input', 'photon-input', this.container);
         this.input.type = 'text';
         this.input.placeholder = this.options.placeholder;
         this.input.autocomplete = 'off';
@@ -70,6 +109,7 @@ L.Control.Photon = L.Control.extend({
         L.DomEvent.on(this.input, 'keyup', this.onKeyUp, this);
         L.DomEvent.on(this.input, 'blur', this.onBlur, this);
         L.DomEvent.on(this.input, 'focus', this.onFocus, this);
+        this.createResultsContainer();
     },
 
     createResultsContainer: function () {
@@ -209,11 +249,11 @@ L.Control.Photon = L.Control.extend({
         else {
             this.CACHE = val;
         }
-        this._do_search(val);
+        this._do_search();
     },
 
     _do_search: function (val) {
-        this.ajax(val, this.handleResults, this);
+        this.ajax(this.handleResults, this);
     },
 
     _onSelected: function (feature) {
@@ -335,50 +375,46 @@ L.Control.Photon = L.Control.extend({
         return tmp;
     },
 
-    forEach: function (els, callback) {
-        Array.prototype.forEach.call(els, callback);
-    },
-
-    ajax: function (val, callback, thisobj) {
-        if (typeof this.xhr === 'object') {
-            this.xhr.abort();
-        }
-        this.xhr = new XMLHttpRequest();
-        var self = this,
-            params = {
-                q: val,
-                lang: this.options.lang,
-                limit: this.options.limit,
-                lat: this.options.includePosition ? this.map.getCenter().lat : null,
-                lon: this.options.includePosition ? this.map.getCenter().lng : null
-            };
-        this.xhr.open('GET', this.options.url + this.buildQueryString(params), true);
-
-        this.xhr.onload = function(e) {
-            self.fire('ajax:return');
-            if (this.status == 200) {
-                if (callback) {
-                    var raw = this.response;
-                    raw = JSON.parse(raw);
-                    callback.call(thisobj || this, raw);
-                }
-            }
-            delete this.xhr;
+    getParams: function () {
+        return {
+            q: this.CACHE,
+            lang: this.options.lang,
+            limit: this.options.limit,
+            lat: this.options.includePosition ? this.map.getCenter().lat : null,
+            lon: this.options.includePosition ? this.map.getCenter().lng : null
         };
+    }
 
-        this.fire('ajax:send');
-        this.xhr.send();
+});
+
+
+L.Control.Photon = L.Control.extend({
+
+    includes: L.Mixin.Events,
+
+    onAdd: function (map, options) {
+        this.map = map;
+        this.container = L.DomUtil.create('div', 'leaflet-photon');
+
+        this.options = L.Util.extend(this.options, options);
+
+        this.input = L.DomUtil.create('input', 'photon-input', this.container);
+        this.search = new L.PhotonSearch(map, this.input, this.options);
+        this.search.on('blur', this.forwardEvent, this);
+        this.search.on('focus', this.forwardEvent, this);
+        this.search.on('hide', this.forwardEvent, this);
+        this.search.on('selected', this.forwardEvent, this);
+        this.search.on('ajax:send', this.forwardEvent, this);
+        this.search.on('ajax:return', this.forwardEvent, this);
+        return this.container;
     },
 
-    buildQueryString: function (params) {
-        var query_string = [];
-        for (var key in params) {
-            if (params[key]) {
-                query_string.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
-            }
-        }
-        return query_string.join('&');
+    // TODO onRemove
+
+    forwardEvent: function (e) {
+        this.fire(e.type, e);
     }
+
 
 });
 
