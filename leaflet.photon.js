@@ -252,7 +252,7 @@ L.PhotonSearch = L.PhotonBase.extend({
         this._do_search();
     },
 
-    _do_search: function (val) {
+    _do_search: function () {
         this.ajax(this.handleResults, this);
     },
 
@@ -423,4 +423,44 @@ L.Map.addInitHook(function () {
         this.photonControl = new L.Control.Photon(this.options.photonControlOptions || {});
         this.addControl(this.photonControl);
     }
+});
+
+L.PhotonReverse = L.PhotonBase.extend({
+
+    includes: L.Mixin.Events,
+
+    options: {
+        url: 'http://photon.komoot.de/reverse/?',
+        limit: 1,
+        handleResults: null
+    },
+
+    initialize: function (options) {
+        L.setOptions(this, options);
+    },
+
+    doReverse: function (latlng) {
+        latlng = L.latLng(latlng);
+        this.fire('reverse', {latlng: latlng});
+        this.latlng = latlng;
+        this.ajax(this.handleResults, this);
+    },
+
+    _handleResults: function (data) {
+        console.log(data);
+    },
+
+    handleResults: function (data) {
+        return (this.options.handleResults || this._handleResults).call(this, data);
+    },
+
+    getParams: function () {
+        return {
+            lang: this.options.lang,
+            limit: this.options.limit,
+            lat: this.latlng.lat,
+            lon: this.latlng.lng
+        };
+    }
+
 });
