@@ -1,7 +1,7 @@
 {
   "name": "leaflet.photon",
   "main": "leaflet.photon.js",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/komoot/leaflet.photon",
   "authors": [
     "Yohan Boniface"
