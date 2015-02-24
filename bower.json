@@ -1,0 +1,18 @@
+{
+  "name": "leaflet.photon",
+  "main": "leaflet.photon.js",
+  "version": "0.3.0",
+  "homepage": "https://github.com/komoot/leaflet.photon",
+  "authors": [
+    "Yohan Boniface"
+  ],
+  "description": "Leaflet plugin to interact with Photon geocoder",
+  "license": "Apache V2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
