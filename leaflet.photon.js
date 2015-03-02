@@ -106,7 +106,7 @@ L.PhotonSearch = L.PhotonBase.extend({
         L.DomEvent.disableClickPropagation(this.input);
 
         L.DomEvent.on(this.input, 'keydown', this.onKeyDown, this);
-        L.DomEvent.on(this.input, 'keyup', this.onKeyUp, this);
+        L.DomEvent.on(this.input, 'input', this.onInput, this);
         L.DomEvent.on(this.input, 'blur', this.onBlur, this);
         L.DomEvent.on(this.input, 'focus', this.onFocus, this);
         this.createResultsContainer();
@@ -174,27 +174,12 @@ L.PhotonSearch = L.PhotonBase.extend({
         }
     },
 
-    onKeyUp: function (e) {
-        var special = [
-            this.KEYS.TAB,
-            this.KEYS.RETURN,
-            this.KEYS.LEFT,
-            this.KEYS.RIGHT,
-            this.KEYS.DOWN,
-            this.KEYS.UP,
-            this.KEYS.APPLE,
-            this.KEYS.SHIFT,
-            this.KEYS.ALT,
-            this.KEYS.CTRL
-        ];
-        if (special.indexOf(e.keyCode) === -1)
-        {
-            if (typeof this.submitDelay === 'number') {
-                window.clearTimeout(this.submitDelay);
-                delete this.submitDelay;
-            }
-            this.submitDelay = window.setTimeout(L.Util.bind(this.search, this), this.options.submitDelay);
+    onInput: function (e) {
+        if (typeof this.submitDelay === 'number') {
+            window.clearTimeout(this.submitDelay);
+            delete this.submitDelay;
         }
+        this.submitDelay = window.setTimeout(L.Util.bind(this.search, this), this.options.submitDelay);
     },
 
     onBlur: function (e) {
