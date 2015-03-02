@@ -24,7 +24,8 @@ var map = L.map('map', {
 - `url` URL of the Photon API to use. *Default: 'http://photon.komoot.de/api/?'*
 - `placeholder` Placeholder of the search input. *Default: "Start typing..."*
 - `noResultLabel` Message to display when no result has been found. *Default: "No result"*
-- `minChar` Min char to be typed before actually searching. *Default: 3*
+- `minChar` Min char to be typed before actually searching (can be a function that
+   takes the val as parameter and must return a boolean). *Default: 3*
 - `limit` Number of results max to return from API. *Default: 5*
 - `submitDelay` Min time buffer between to sent request, to avoid too much
   requests when typing fast (in milliseconds). *Default: 300*

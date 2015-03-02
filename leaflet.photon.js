@@ -235,20 +235,10 @@ L.PhotonSearch = L.PhotonBase.extend({
 
     search: function() {
         var val = this.input.value;
-        if (val.length < this.options.minChar) {
-            this.clear();
-            return;
-        }
-        if(!val) {
-            this.clear();
-            return;
-        }
-        if( val + '' === this.CACHE + '') {
-            return;
-        }
-        else {
-            this.CACHE = val;
-        }
+        var minChar = typeof this.options.minChar === 'function' ? this.options.minChar(val) : val.length >= this.options.minChar;
+        if (!val || !minChar) return this.clear();
+        if(val + '' === this.CACHE + '') return;
+        else this.CACHE = val;
         this._doSearch();
     },
 
