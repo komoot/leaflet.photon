@@ -100,9 +100,10 @@ L.PhotonSearch = L.PhotonBase.extend({
         } catch (e) {
             // Hello IE8
         }
-        this.input.type = 'text';
+        this.input.type = 'search';
         this.input.placeholder = this.options.placeholder;
         this.input.autocomplete = 'off';
+        this.input.autocorrect = 'off';
         L.DomEvent.disableClickPropagation(this.input);
 
         L.DomEvent.on(this.input, 'keydown', this.onKeyDown, this);
