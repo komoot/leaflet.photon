@@ -194,6 +194,7 @@ L.PhotonSearch = L.PhotonBase.extend({
     onFocus: function (e) {
         this.fire('focus');
         this.input.select();
+        this.search();  // In case we have a value from a previous search.
     },
 
     clear: function () {
