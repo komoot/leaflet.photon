@@ -14,7 +14,7 @@ L.PhotonBase = L.Class.extend({
 
         this.xhr.onload = function(e) {
             self.fire('ajax:return');
-            if (this.status == 200) {
+            if (this.status === 200) {
                 if (callback) {
                     var raw = this.response;
                     raw = JSON.parse(raw);
@@ -29,13 +29,13 @@ L.PhotonBase = L.Class.extend({
     },
 
     buildQueryString: function (params) {
-        var query_string = [];
+        var queryString = [];
         for (var key in params) {
             if (params[key]) {
-                query_string.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
+                queryString.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
             }
         }
-        return query_string.join('&');
+        return queryString.join('&');
     },
 
     featureToPopupContent: function (feature) {
@@ -224,7 +224,7 @@ L.PhotonSearch = L.PhotonBase.extend({
     },
 
     setChoice: function (choice) {
-        choice = choice || this.RESULTS[this.CURRENT];
+        choice = choice || this.RESULTS[this.CURRENT];
         if (choice) {
             this.hide();
             this.input.value = '';
@@ -249,10 +249,10 @@ L.PhotonSearch = L.PhotonBase.extend({
         else {
             this.CACHE = val;
         }
-        this._do_search();
+        this._doSearch();
     },
 
-    _do_search: function () {
+    _doSearch: function () {
         this.ajax(this.handleResults, this);
     },
 
@@ -261,7 +261,7 @@ L.PhotonSearch = L.PhotonBase.extend({
     },
 
     onSelected: function (choice) {
-        return (this.options.onSelected || this._onSelected).call(this, choice);
+        return (this.options.onSelected || this._onSelected).call(this, choice);
     },
 
     _formatResult: function (feature, el) {
@@ -279,11 +279,11 @@ L.PhotonSearch = L.PhotonBase.extend({
     },
 
     formatResult: function (feature, el) {
-        return (this.options.formatResult || this._formatResult).call(this, feature, el);
+        return (this.options.formatResult || this._formatResult).call(this, feature, el);
     },
 
     formatType: function (feature) {
-        return (this.options.formatType || this._formatType).call(this, feature);
+        return (this.options.formatType || this._formatType).call(this, feature);
     },
 
     _formatType: function (feature) {
@@ -324,7 +324,7 @@ L.PhotonSearch = L.PhotonBase.extend({
         this.clear();
         this.resultsContainer.style.display = 'block';
         this.resizeContainer();
-        this.forEach(geojson.features, function (feature, index) {
+        this.forEach(geojson.features, function (feature) {
             self.RESULTS.push(self.createResult(feature));
         });
         if (geojson.features.length === 0) {
@@ -447,11 +447,13 @@ L.PhotonReverse = L.PhotonBase.extend({
     },
 
     _handleResults: function (data) {
+        /*eslint-disable no-console */
         console.log(data);
+        /*eslint-enable no-alert */
     },
 
     handleResults: function (data) {
-        return (this.options.handleResults || this._handleResults).call(this, data);
+        return (this.options.handleResults || this._handleResults).call(this, data);
     },
 
     getParams: function () {
