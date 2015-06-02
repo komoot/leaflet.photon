@@ -60,7 +60,8 @@ L.PhotonSearch = L.PhotonBase.extend({
         submitDelay: 300,
         includePosition: true,
         noResultLabel: 'No result',
-        feedbackEmail: 'photon@komoot.de'  // Set to null to remove feedback box
+        feedbackEmail: 'photon@komoot.de',  // Set to null to remove feedback box
+        feedbackLabel: 'Feedback'
     },
 
     CACHE: '',
@@ -311,7 +312,7 @@ L.PhotonSearch = L.PhotonBase.extend({
         if (this.options.feedbackEmail) {
             var feedback = L.DomUtil.create('a', 'photon-feedback', this.resultsContainer);
             feedback.href = 'mailto:' + this.options.feedbackEmail;
-            feedback.innerHTML = 'Feedback';
+            feedback.innerHTML = this.options.feedbackLabel;
         }
         this.CURRENT = 0;
         this.highlight();
