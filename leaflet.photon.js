@@ -334,7 +334,7 @@ L.PhotonSearch = L.PhotonBase.extend({
         if (this.options.feedbackEmail) {
             var feedback = L.DomUtil.create('a', 'photon-feedback', this.resultsContainer);
             feedback.href = 'mailto:' + this.options.feedbackEmail;
-            feedback.innerHTML = 'Feedback';
+            feedback.innerHTML = this.options.feedbackLabel || 'Feedback';
         }
         this.CURRENT = 0;
         this.highlight();
