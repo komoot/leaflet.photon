@@ -32,6 +32,7 @@ var map = L.map('map', {
   for the search. *Default: true*
 - `feedbackEmail` Email to use as feedback link. Set to null to disable the
   feedback box. *Default: "photon@komoot.de"*
+- `feedbackLabel` Message for feedback link. *Default: "Feedback"*
 - `lang` land code (en, it, fr…) to send to Photon API. *Default: null*
 - `onSelected` Action to run when user select a search result. *Default: center
   map on selected result's latlng*
