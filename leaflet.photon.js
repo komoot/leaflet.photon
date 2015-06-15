@@ -215,9 +215,9 @@ L.PhotonSearch = L.PhotonBase.extend({
         choice = choice || this.RESULTS[this.CURRENT];
         if (choice) {
             this.hide();
-            this.input.value = '';
             this.fire('selected', {choice: choice.feature});
             this.onSelected(choice.feature);
+            this.input.value = '';
         }
     },
 
