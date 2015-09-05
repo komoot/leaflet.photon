@@ -101,7 +101,7 @@ L.PhotonSearch = L.PhotonBase.extend({
         } catch (e) {
             // Hello IE8
         }
-        this.input.type = 'search';
+        this.input.type = L.Browser.ie ? 'text' : 'search';
         this.input.placeholder = this.options.placeholder;
         this.input.autocomplete = 'off';
         this.input.autocorrect = 'off';
