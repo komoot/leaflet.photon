@@ -48,7 +48,7 @@ L.PhotonBase = L.Class.extend({
 });
 
 
-L.PhotonSearch = L.PhotonBase.extend({
+L.PhotonBaseSearch = L.PhotonBase.extend({
 
     includes: L.Mixin.Events,
 
@@ -80,8 +80,7 @@ L.PhotonSearch = L.PhotonBase.extend({
         CTRL: 18
     },
 
-    initialize: function (map, input, options) {
-        this.map = map;
+    initialize: function (input, options) {
         this.input = input;
         L.setOptions(this, options);
         var CURRENT = null;
@@ -235,7 +234,6 @@ L.PhotonSearch = L.PhotonBase.extend({
     },
 
     _onSelected: function (feature) {
-        this.map.setView([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], 16);
     },
 
     onSelected: function (choice) {
@@ -357,14 +355,33 @@ L.PhotonSearch = L.PhotonBase.extend({
         return {
             q: this.CACHE,
             lang: this.options.lang,
-            limit: this.options.limit,
-            lat: this.options.includePosition ? this.map.getCenter().lat : null,
-            lon: this.options.includePosition ? this.map.getCenter().lng : null
+            limit: this.options.limit
         };
     }
 
 });
 
+L.PhotonSearch = L.PhotonBaseSearch.extend({
+
+    initialize: function (map, input, options) {
+        this.map = map;
+        L.PhotonBaseSearch.prototype.initialize.call(this, input, options);
+    },
+
+    _onSelected: function (feature) {
+        this.map.setView([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], 16);
+    },
+
+    getParams: function () {
+        var params = L.PhotonBaseSearch.prototype.getParams.call(this);
+        if (this.options.includePosition) {
+            params.lat = this.map.getCenter().lat;
+            params.lon = this.map.getCenter().lng;
+        }
+        return params;
+    }
+
+});
 
 L.Control.Photon = L.Control.extend({
 
