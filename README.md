@@ -5,6 +5,8 @@ This is [leaflet](http://leafletjs.com/) plugin for [photon](https://github.com/
 
 ## Sample Usage
 
+Use the map options to create a Photon search control when the map is created:
+
 ```javascript
 function myHandler(geojson) {
     console.debug(geojson);
@@ -20,7 +22,14 @@ var map = L.map('map', {
 );
 ```
 
-## Options
+Or create a control afterwards:
+
+```javascript
+var searchControl = L.control.photon(photonControlOptions);
+searchControl.addTo(map);
+```
+
+## Options
 - `url` URL of the Photon API to use. *Default: 'http://photon.komoot.de/api/?'*
 - `placeholder` Placeholder of the search input. *Default: "Start typing..."*
 - `noResultLabel` Message to display when no result has been found. *Default: "No result"*

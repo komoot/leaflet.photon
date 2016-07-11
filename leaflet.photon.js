@@ -410,8 +410,11 @@ L.Control.Photon = L.Control.extend({
         this.fire(e.type, e);
     }
 
-
 });
+
+L.control.photon = function(options) {
+    return new L.Control.Photon(options);
+}
 
 L.Map.addInitHook(function () {
     if (this.options.photonControl) {
