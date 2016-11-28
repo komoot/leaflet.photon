@@ -53,7 +53,7 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
     includes: L.Mixin.Events,
 
     options: {
-        url: 'http://photon.komoot.de/api/?',
+        url: 'https://photon.komoot.de/api/?',
         placeholder: 'Start typing...',
         minChar: 3,
         limit: 5,
