@@ -58,6 +58,7 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
         minChar: 3,
         limit: 5,
         submitDelay: 300,
+        targetElement: 'body',
         includePosition: true,
         noResultLabel: 'No result',
         feedbackEmail: 'photon@komoot.de',  // Set to null to remove feedback box
@@ -114,7 +115,7 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
     },
 
     createResultsContainer: function () {
-        this.resultsContainer = L.DomUtil.create('ul', 'photon-autocomplete', document.querySelector('body'));
+        this.resultsContainer = L.DomUtil.create('ul', 'photon-autocomplete', document.querySelector(this.options.targetElement));
     },
 
     resizeContainer: function()
