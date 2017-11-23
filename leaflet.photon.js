@@ -115,7 +115,7 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
     },
 
     createResultsContainer: function () {
-        this.resultsContainer = L.DomUtil.create('ul', 'photon-autocomplete', document.querySelector(this.options.targetElement));
+        this.resultsContainer = this.options.resultsContainer || L.DomUtil.create('ul', 'photon-autocomplete', document.querySelector('body'));
     },
 
     resizeContainer: function()
