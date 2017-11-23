@@ -58,7 +58,6 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
         minChar: 3,
         limit: 5,
         submitDelay: 300,
-        targetElement: 'body',
         includePosition: true,
         noResultLabel: 'No result',
         feedbackEmail: 'photon@komoot.de',  // Set to null to remove feedback box
