@@ -355,7 +355,8 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
         return {
             q: this.CACHE,
             lang: this.options.lang,
-            limit: this.options.limit
+            limit: this.options.limit,
+            osm_tag: this.options.osm_tag
         };
     }
 
@@ -459,7 +460,8 @@ L.PhotonReverse = L.PhotonBase.extend({
             lang: this.options.lang,
             limit: this.options.limit,
             lat: this.latlng.lat,
-            lon: this.latlng.lng
+            lon: this.latlng.lng,
+            osm_tag: this.options.osm_tag
         };
     }
 
