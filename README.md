@@ -46,6 +46,7 @@ searchControl.addTo(map);
 - `lang` land code (en, it, fr…) to send to Photon API. *Default: null*
 - `onSelected` Action to run when user select a search result. *Default: center
   map on selected result's latlng*
+- `osm_tag` osm_tag (e.g. 'boundary:administrative') to send to Photon API for filtering. *Default: null*
 - `formatResult` Optional function to control the way geojson features are
   displayed in the results box.
 - `formatType` Optional function to control the way features types (amenity,
