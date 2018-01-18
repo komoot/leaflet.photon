@@ -429,7 +429,7 @@ L.PhotonReverse = L.PhotonBase.extend({
     includes: L.Mixin.Events,
 
     options: {
-        url: 'http://photon.komoot.de/reverse/?',
+        url: 'https://photon.komoot.de/reverse/?',
         limit: 1,
         handleResults: null
     },
