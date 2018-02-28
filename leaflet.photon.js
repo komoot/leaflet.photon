@@ -263,7 +263,9 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
     },
 
     _formatType: function (feature) {
-        return feature.properties.osm_value;
+        return feature.properties.osm_value === 'yes'
+               ? feature.properties.osm_key
+               : feature.properties.osm_value;
     },
 
     createResult: function (feature) {
