@@ -31,8 +31,12 @@ L.PhotonBase = L.Class.extend({
     buildQueryString: function (params) {
         var queryString = [];
         for (var key in params) {
-            if (params[key]) {
+            if (params[key] && typeof(params[key]) == 'string') {
                 queryString.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
+            } else if (params[key]) {
+	        for (i = 0; i < params[key].length; i++) {
+                    queryString.push(encodeURIComponent(key) + '=' + params[key][i]);
+                }
             }
         }
         return queryString.join('&');
