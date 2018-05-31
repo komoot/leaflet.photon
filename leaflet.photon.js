@@ -245,7 +245,14 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
             detailsContainer = L.DomUtil.create('small', '', el),
             details = [],
             type = this.formatType(feature);
-        title.innerHTML = feature.properties.name;
+        if (feature.properties.name) {
+            title.innerHTML = feature.properties.name;
+        } else if (feature.properties.housenumber) {
+            title.innerHTML = feature.properties.housenumber;
+            if (feature.properties.street) {
+                title.innerHTML += ' ' + feature.properties.street;
+            }
+        }
         if (type) details.push(type);
         if (feature.properties.city && feature.properties.city !== feature.properties.name) {
             details.push(feature.properties.city);
