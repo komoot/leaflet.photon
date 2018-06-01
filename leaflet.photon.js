@@ -31,7 +31,7 @@ L.PhotonBase = L.Class.extend({
     buildQueryString: function (params) {
         var queryString = [];
         for (var key in params) {
-            if (params[key] && typeof(params[key]) == 'string') {
+            if (params[key] && (typeof(params[key]) == 'string' || typeof(params[key]) == 'number')) {
                 queryString.push(encodeURIComponent(key) + '=' + params[key]);
             } else if (params[key] && params[key].length) {
 	        for (i = 0; i < params[key].length; i++) {
@@ -376,7 +376,7 @@ L.PhotonSearch = L.PhotonBaseSearch.extend({
     },
 
     _onSelected: function (feature) {
-        this.map.setView([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], 16);
+        this.map.setView([feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);
     },
 
     getParams: function () {
