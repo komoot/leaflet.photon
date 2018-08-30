@@ -1,6 +1,6 @@
 {
   "name": "leaflet.photon",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "description": "Leaflet plugin to interact with Photon geocoder",
   "main": "leaflet.photon.js",
   "scripts": {
