@@ -50,7 +50,7 @@ L.PhotonBase = L.Class.extend({
 
 L.PhotonBaseSearch = L.PhotonBase.extend({
 
-    includes: L.Mixin.Events,
+    includes: ((typeof L.Evented !== 'undefined' && L.Evented.prototype) || L.Mixin.Events),
 
     options: {
         url: 'https://photon.komoot.de/api/?',
@@ -395,7 +395,7 @@ L.PhotonSearch = L.PhotonBaseSearch.extend({
 
 L.Control.Photon = L.Control.extend({
 
-    includes: L.Mixin.Events,
+    includes: ((typeof L.Evented !== 'undefined' && L.Evented.prototype) || L.Mixin.Events),
 
     onAdd: function (map, options) {
         this.map = map;
@@ -435,7 +435,7 @@ L.Map.addInitHook(function () {
 
 L.PhotonReverse = L.PhotonBase.extend({
 
-    includes: L.Mixin.Events,
+    includes: ((typeof L.Evented !== 'undefined' && L.Evented.prototype) || L.Mixin.Events),
 
     options: {
         url: 'https://photon.komoot.de/reverse/?',
