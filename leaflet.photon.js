@@ -59,6 +59,7 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
         limit: 5,
         submitDelay: 300,
         includePosition: true,
+        bbox: null,
         noResultLabel: 'No result',
         feedbackEmail: 'photon@komoot.de',  // Set to null to remove feedback box
         feedbackLabel: 'Feedback'
@@ -387,6 +388,9 @@ L.PhotonSearch = L.PhotonBaseSearch.extend({
         if (this.options.includePosition) {
             params.lat = this.map.getCenter().lat;
             params.lon = this.map.getCenter().lng;
+        }
+        if (this.options.bbox && this.options.bbox.length === 4) {
+            params.bbox = this.options.bbox.join(',');
         }
         return params;
     }

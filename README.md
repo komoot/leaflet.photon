@@ -40,6 +40,7 @@ searchControl.addTo(map);
   requests when typing fast (in milliseconds). *Default: 300*
 - `includePosition` Whether to include or not the map center as location bias
   for the search. *Default: true*
+- `bbox` Filter results on bounding box array. *Default: null*
 - `feedbackEmail` Email to use as feedback link. Set to null to disable the
   feedback box. *Default: "photon@komoot.de"*
 - `feedbackLabel` Message for feedback link. *Default: "Feedback"*
