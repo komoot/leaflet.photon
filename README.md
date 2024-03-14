@@ -55,6 +55,8 @@ searchControl.addTo(map);
 - `resultsHandler` Optional function that will be called when a geojson is
   retrieved from the API. You way want to use this to display points in the map
   for instance.
+- `location_bias_scale` Optional option to control this parameter in the API
+  search calls. From 0 to 1. Default: `undefined`.
 
 
 ## Events

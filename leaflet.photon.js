@@ -388,6 +388,9 @@ L.PhotonSearch = L.PhotonBaseSearch.extend({
         if (this.options.includePosition) {
             params.lat = this.map.getCenter().lat;
             params.lon = this.map.getCenter().lng;
+            if (this.options.location_bias_scale) {
+                params.location_bias_scale = this.options.location_bias_scale;
+            }
         }
         if (this.options.bbox && this.options.bbox.length === 4) {
             params.bbox = this.options.bbox.join(',');
