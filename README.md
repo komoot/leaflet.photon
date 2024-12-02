@@ -30,7 +30,7 @@ searchControl.addTo(map);
 ```
 
 ## Options
-- `url` URL of the Photon API to use. *Default: 'https://photon.komoot.de/api/?'*
+- `url` URL of the Photon API to use. *Default: 'https://photon.komoot.io/api/?'*
 - `placeholder` Placeholder of the search input. *Default: "Start typing..."*
 - `noResultLabel` Message to display when no result has been found. *Default: "No result"*
 - `minChar` Min char to be typed before actually searching (can be a function that
